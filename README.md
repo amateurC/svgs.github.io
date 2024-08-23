@@ -1,1 +1,0 @@
-# svgs.github.io
