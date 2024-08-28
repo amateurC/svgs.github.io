@@ -7,8 +7,7 @@
     content="Advanced Dental Digitization: Incorporating Shape Priors and
     Multiview Coherence in Diffusion Models for Tooth Model Design">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Advanced Dental Digitization: Incorporating Shape Priors and
-    Multiview Coherence in Diffusion Models for Tooth Model Design</title>
+  <title>SVGS: Single-View to 3D Object Editing via Gaussian Splatting</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
@@ -29,8 +28,7 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">Advanced Dental Digitization: Incorporating Shape Priors and
-              Multiview Coherence in Diffusion Models for Tooth Model Design</h1>
+            <h1 class="title is-1 publication-title">SVGS: Single-View to 3D Object Editing via Gaussian Splatting</h1>
             <div class="is-size-5 publication-authors">
               <!-- <span class="author-block">
                 Yan Tian,</span>
@@ -100,20 +98,7 @@
           <h2 class="title is-3">Abstract</h2>
           <div class="content has-text-justified">
             <p>
-              Automatic design of 3D tooth model plays an important role in dental digitization.
-              However, diffusion models in multivew editing rely on score distillation sampling (SDS) to enforce 3D
-              awareness, which cannot model the joint image distribution of multiple views, leading to a drawback in 3D
-              consistency.
-              In addition to that, the collision avoidance term in NeRF fine-tuning often yields wield results owing to
-              the lack of shape prior with regard to human tooth.
-              Motivated by the energy-based distribution modeling and diffusion model-based shape denoising, we improve
-              the iterative dataset update (IDU) as follows:
-              1) A multiview score distillation function (MSDS) is derived in the multiview editing stage by
-              incorporating the inter-view coherence compatible function;
-              2) The defective tooth is renovated by adding shape prior distilled by a diffusion model to increase the
-              realism in the NeRF fine-tuning stage.
-              Experimental results on two tooth design datasets show that our approach improves the multiview
-              consistency and realism of the generated tooth by a margin when it is compared with prevailing approaches.
+              Text-driven 3D editing has gained significant attention due to its convenience and user-friendliness. However, traditional 3D editing methods that rely on mesh and point cloud representations often struggle to accurately describe complex objects. In contrast, methods based on implicit 3D representations, such as Neural Radiance Fields (NeRF), can effectively render complex objects but suffer from slow processing speeds and limited control over specific object areas. Additionally, existing methods often face challenges in maintaining consistency and efficiency in multi-view editing. To address these limitations, we propose SVGS, a method that utilizes text instructions to edit objects through 3D Gaussian Splatting (GS). Specifically, given a singleview image and text input, we first employ a 2D editing strategy based on the cross-domain diffusion model to perform editing operations on the input image and generate multi-view consistent edited images. Subsequently, we introduce a GS reconstruction framework based on the edited sparse images to achieve 3D object editing. We compared SVGS with existing baseline methods across various scene settings, and the results demonstrate that SVGS excels in both editing capability and processing speed, marking a significant advancement in 3D editing technology.
             </p>
           </div>
         </div>
