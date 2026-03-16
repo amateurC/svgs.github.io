@@ -6,7 +6,7 @@
   <meta name="description"
     content="Advanced Dental Digitization: Incorporating Shape Priors and Multiview Coherence in Diffusion Models for Tooth Model Design">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>SVGS: Single-View to 3D Object Editing via Gaussian Splatting</title>
+  <title>DM-CFO: A Diffusion Model for Compositional 3D Tooth Generation with Collision-Free Optimization</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="./static/css/bulma.min.css">
@@ -18,100 +18,83 @@
   <style>
     body {
       font-family: "Google Sans", "Noto Sans", sans-serif;
+      background: #fcfcfd;
+      color: #222;
     }
 
     .hero {
-      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+      background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
     }
 
     .publication-title {
       line-height: 1.15;
-      margin-bottom: 1.2rem;
+      margin-bottom: 1.4rem;
       font-family: "Google Sans", sans-serif;
     }
 
-    .publication-author-wrapper {
-      margin: 1.2rem auto 1.8rem auto;
-      max-width: 1100px;
-      padding: 1.35rem 1.5rem;
+    .authors-wrapper {
+      margin: 1.5rem auto 1.8rem auto;
+      padding: 1.2rem 1rem 0.6rem 1rem;
       border-radius: 18px;
-      background: #fafafa;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+      background: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
-    .author-list {
+    .publication-authors {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.45rem 0.95rem;
-      margin-bottom: 1rem;
-      line-height: 1.9;
+      gap: 1rem 1rem;
     }
 
-    .author-list .author-block {
+    .author-card {
       display: inline-block;
-      white-space: nowrap;
-      font-size: 1.08rem;
-      font-weight: 500;
-      color: #222;
+      width: 20%;
+      min-width: 190px;
+      vertical-align: top;
+      padding: 0.9rem 0.8rem;
+      border-radius: 14px;
+      background: #fafafa;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .author-list sup,
-    .publication-affiliations sup {
-      font-size: 0.72em;
-      vertical-align: super;
+    .author-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .author-name-block {
+      display: block;
+      font-size: 1.06rem;
       font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.35rem;
     }
 
-    .publication-affiliations {
-      max-width: 980px;
-      margin: 0 auto;
-      font-size: 0.98rem;
-      line-height: 1.75;
-      color: #555;
-    }
-
-    .affiliation-line {
-      margin: 0.12rem 0;
-    }
-
-    .corresponding-author,
-    .author-emails {
-      margin-top: 0.7rem;
-      font-size: 0.95rem;
-      color: #444;
-    }
-
-    .publication-affiliations a {
-      color: #3273dc;
-      text-decoration: none;
-    }
-
-    .publication-affiliations a:hover {
-      text-decoration: underline;
+    .author-school-block {
+      display: block;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: #5b6472;
     }
 
     .publication-links {
-      margin-top: 1.4rem;
+      margin-top: 1.6rem;
     }
 
     .publication-links .link-block {
-      margin: 0 0.25rem 0.5rem 0.25rem;
+      margin: 0 0.3rem 0.6rem 0.3rem;
+    }
+
+    .publication-links .button {
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
     }
 
     .section-card {
-      background: #fff;
+      background: #ffffff;
       border-radius: 18px;
-      padding: 1.5rem 1.5rem 1.2rem 1.5rem;
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
-    }
-
-    .content img {
-      width: 100%;
-      height: auto;
-      border-radius: 14px;
-      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
-      margin-top: 0.5rem;
+      padding: 1.6rem 1.6rem 1.3rem 1.6rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
     .title.is-3 {
@@ -120,8 +103,35 @@
 
     .content p {
       font-size: 1.02rem;
-      line-height: 1.8;
-      color: #333;
+      line-height: 1.85;
+      color: #2f3640;
+    }
+
+    .content img {
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      margin-top: 0.5rem;
+    }
+
+    .table {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    figcaption {
+      margin-top: 0.8rem;
+      font-style: italic;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    @media screen and (max-width: 1024px) {
+      .author-card {
+        width: 28%;
+      }
     }
 
     @media screen and (max-width: 768px) {
@@ -129,16 +139,23 @@
         font-size: 2rem !important;
       }
 
-      .publication-author-wrapper {
-        padding: 1rem;
+      .authors-wrapper {
+        padding: 1rem 0.8rem 0.4rem 0.8rem;
       }
 
-      .author-list .author-block {
-        font-size: 1rem;
+      .author-card {
+        width: 44%;
+        min-width: unset;
       }
 
-      .publication-affiliations {
-        font-size: 0.92rem;
+      .section-card {
+        padding: 1.2rem 1rem 1rem 1rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .author-card {
+        width: 100%;
       }
     }
   </style>
@@ -152,52 +169,49 @@
         <div class="columns is-centered">
           <div class="column has-text-centered">
             <h1 class="title is-1 publication-title">
-              SVGS: Single-View to 3D Object Editing via Gaussian Splatting
+              DM-CFO: A Diffusion Model for Compositional 3D Tooth Generation with Collision-Free Optimization
             </h1>
 
-            <div class="publication-author-wrapper">
-              <div class="is-size-5 publication-authors author-list">
-                <span class="author-block">Pengcheng Xue<sup>1</sup></span>
-                <span class="author-block">Yan Tian<sup>1,2</sup><sup>†</sup></span>
-                <span class="author-block">Qiutao Song<sup>1</sup></span>
-                <span class="author-block">Ziyi Wang<sup>1</sup></span>
-                <span class="author-block">Linyang He<sup>3</sup></span>
-                <span class="author-block">Weiping Ding<sup>4</sup></span>
-                <span class="author-block">Mahmoud Hassaballah<sup>5,6</sup></span>
-                <span class="author-block">Karen Egiazarian<sup>7</sup></span>
-                <span class="author-block">Weifa Yang<sup>8</sup></span>
-                <span class="author-block">Leszek Rutkowski<sup>9,10</sup></span>
-              </div>
-
-              <div class="publication-affiliations">
-                <div class="affiliation-line"><sup>1</sup> Zhejiang Gongshang University, Hangzhou 310018, China</div>
-                <div class="affiliation-line"><sup>2</sup> Zhejiang Key Laboratory of Big Data and Future E-Commerce
-                  Technology, Hangzhou 310018, China</div>
-                <div class="affiliation-line"><sup>3</sup> Jianpei Technology Co., Ltd, Hangzhou 311210, China</div>
-                <div class="affiliation-line"><sup>4</sup> Nantong University, Nantong 226019, China</div>
-                <div class="affiliation-line"><sup>5</sup> Prince Sattam Bin Abdulaziz University, AlKharj 16278,
-                  Saudi Arabia</div>
-                <div class="affiliation-line"><sup>6</sup> Qena University, Qena 83523, Egypt</div>
-                <div class="affiliation-line"><sup>7</sup> Tampere University, Tampere 33720, Finland</div>
-                <div class="affiliation-line"><sup>8</sup> University of Hong Kong, Hong Kong 999077, China</div>
-                <div class="affiliation-line"><sup>9</sup> AGH University of Krakow, Krakow 30-059, Poland</div>
-                <div class="affiliation-line"><sup>10</sup> Systems Research Institute of the Polish Academy of
-                  Sciences, Warsaw 01-447, Poland</div>
-
-                <div class="corresponding-author">
-                  <sup>†</sup> Corresponding author:
-                  <a href="mailto:tianyan@zjgsu.edu.cn">tianyan@zjgsu.edu.cn</a>
+            <div class="authors-wrapper">
+              <div class="is-size-5 publication-authors">
+                <div class="author-card">
+                  <span class="author-name-block">Yan Tian</span>
+                  <span class="author-school-block">Zhejiang Gongshang University</span>
                 </div>
 
-                <div class="author-emails">
-                  Pengcheng Xue:
-                  <a href="mailto:1152231696@qq.com">1152231696@qq.com</a>
-                  &nbsp;|&nbsp;
-                  Linyang He:
-                  <a href="mailto:he.linyang@jianpeicn.com">he.linyang@jianpeicn.com</a>
-                  &nbsp;|&nbsp;
-                  Weiping Ding:
-                  <a href="mailto:dwp9988@163.com">dwp9988@163.com</a>
+                <div class="author-card">
+                  <span class="author-name-block">Pengcheng Xue</span>
+                  <span class="author-school-block">Zhejiang Gongshang University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Weiping Ding</span>
+                  <span class="author-school-block">Nantong University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Mahmoud Hassaballah</span>
+                  <span class="author-school-block">Qena University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Karen Egiazarian</span>
+                  <span class="author-school-block">Tampere University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Aura Conci</span>
+                  <span class="author-school-block">Universidade Federal Fluminense</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Abdulkadir Sengur</span>
+                  <span class="author-school-block">Firat University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Leszek Rutkowski</span>
+                  <span class="author-school-block">Poland and AGH University of Krakow</span>
                 </div>
               </div>
             </div>
@@ -205,19 +219,15 @@
             <div class="column has-text-centered">
               <div class="publication-links">
                 <span class="link-block">
-                  <a href="" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                    </span>
+                  <a href="https://arxiv.org/abs/2603.0360" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
                     <span>Paper</span>
                   </a>
                 </span>
 
                 <span class="link-block">
                   <a href="" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
+                    <span class="icon"><i class="fab fa-github"></i></span>
                     <span>Code</span>
                   </a>
                 </span>
@@ -238,20 +248,19 @@
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
               <p>
-                Text-driven 3D editing has gained significant attention due to its convenience and user-friendliness.
-                However, traditional 3D editing methods that rely on mesh and point cloud representations often
-                struggle to accurately describe complex objects. In contrast, methods based on implicit 3D
-                representations, such as Neural Radiance Fields (NeRF), can effectively render complex objects but
-                suffer from slow processing speeds and limited control over specific object areas. Additionally,
-                existing methods often face challenges in maintaining consistency and efficiency in multi-view editing.
-                To address these limitations, we propose SVGS, a method that utilizes text instructions to edit objects
-                through 3D Gaussian Splatting (GS). Specifically, given a single-view image and text input, we first
-                employ a 2D editing strategy based on the cross-domain diffusion model to perform editing operations on
-                the input image and generate multi-view consistent edited images. Subsequently, we introduce a GS
-                reconstruction framework based on the edited sparse images to achieve 3D object editing. We compared
-                SVGS with existing baseline methods across various scene settings, and the results demonstrate that
-                SVGS excels in both editing capability and processing speed, marking a significant advancement in 3D
-                editing technology.
+                The automatic design of a 3D tooth model plays a crucial role in dental digitization. However, current
+                approaches face challenges in compositional 3D tooth generation because both the layouts and shapes of
+                missing teeth need to be optimized. In addition, collision conflicts are often omitted in 3D
+                Gaussian–based compositional 3D generation, where objects may intersect with each other due to the
+                absence of explicit geometric information on the object surfaces. Motivated by graph generation through
+                diffusion models and collision detection using 3D Gaussians, we propose an approach named DM-CFO for
+                compositional tooth generation, where the layout of missing teeth is progressively restored during the
+                denoising phase under both text and graph constraints. Then, the Gaussian parameters of each
+                layout-guided tooth and the entire jaw are alternately updated using score distillation sampling (SDS).
+                Furthermore, a regularization term based on the distances between the 3D Gaussians of neighboring teeth
+                and the anchor tooth is introduced to penalize tooth intersections. Experimental results on three
+                tooth-design datasets demonstrate that our approach significantly improves the multiview consistency and
+                realism of the generated teeth compared with existing methods.
               </p>
             </div>
           </div>
@@ -267,7 +276,7 @@
           <div class="section-card">
             <h2 class="title is-3">Method</h2>
             <div class="content has-text-justified">
-              <img src="./static/images/framework.png" alt="SVGS framework">
+              <img src="./static/images/framework.png" alt="Description of the image">
             </div>
           </div>
         </div>
@@ -280,9 +289,178 @@
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
           <div class="section-card">
-            <h2 class="title is-3">Example</h2>
+            <h2 class="title is-3">Quantitative Comparison</h2>
             <div class="content has-text-justified">
-              <img src="./static/images/example.png" alt="SVGS examples">
+              <p>
+                <strong>Table 2.</strong> Quantitative comparison table across three dental datasets. Our method
+                consistently achieves the best performance in layout accuracy, collision rate, and reconstruction
+                fidelity.
+              </p>
+              <img src="./static/images/quantitative_comparison.png"
+                alt="Quantitative results on three dental datasets">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="section-card">
+            <h2 class="title is-3">Inference Time Comparison</h2>
+            <div class="content has-text-justified">
+              <p>
+                <strong>Table 3.</strong> Inference time (in minutes) for different methods. Our method maintains
+                competitive efficiency while improving reconstruction fidelity.
+              </p>
+              <table class="table is-bordered is-striped is-fullwidth is-hoverable">
+                <thead>
+                  <tr>
+                    <th>Methods</th>
+                    <th>MVDream</th>
+                    <th>Controlnet</th>
+                    <th>GALA3D</th>
+                    <th>ComboVerse</th>
+                    <th>Ours</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>Inference Time (minutes)</th>
+                    <td>2.5</td>
+                    <td>3.5</td>
+                    <td>4.2</td>
+                    <td>4.4</td>
+                    <td>4.8</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="section-card">
+            <h2 class="title is-3">Ablation Study</h2>
+            <div class="content has-text-justified">
+              <p>
+                The curve of training loss in ablation studies. Our proposed components help achieve faster convergence
+                and better stability during optimization.
+              </p>
+
+              <figure class="has-text-centered">
+                <div class="columns is-vcentered">
+                  <div class="column">
+                    <img src="./static/images/original_input.png" alt="(a) Tooth Number"
+                      style="width: 100%; height: auto;">
+                    <p style="margin-top: 0.5em;">(a) Input Image</p>
+                  </div>
+
+                  <div class="column">
+                    <img src="./static/images/training_loss_curve.png" alt="(b) Training loss curve"
+                      style="width: 100%; height: auto;">
+                    <p style="margin-top: 0.5em;">(b) Training Loss Curve</p>
+                  </div>
+                </div>
+
+                <figcaption>
+                  <strong>Figure 5:</strong> Ablation study visualization. (a) Tooth Number; (b) Training loss curve
+                  demonstrating improved convergence with proposed components.
+                </figcaption>
+              </figure>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="section-card">
+            <h2 class="title is-3">Qualitative Comparison on Shining3D</h2>
+            <div class="content has-text-justified">
+              <p>
+                Qualitative comparisons between <strong>ComboVerse</strong>, <strong>GALA3D</strong>, and
+                <strong>our approach</strong> on the <strong>Shining3D tooth design dataset</strong> are illustrated.
+                Our method better preserves structural details and avoids shape artifacts under complex occlusions and
+                missing regions.
+              </p>
+              <figure class="has-text-centered">
+                <img src="./static/images/qualitative_comparison_shining3d.png"
+                  alt="Qualitative comparison between ComboVerse, GALA3D, and Ours on Shining3D"
+                  style="max-width: 100%; height: auto;">
+                <figcaption>
+                  <strong>Figure 7:</strong> Qualitative comparison between ComboVerse, GALA3D, and our method on the
+                  Shining3D tooth design dataset.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="section-card">
+            <h2 class="title is-3">Layout Evolution During Training</h2>
+            <div class="content has-text-justified">
+              <p>
+                The layout is progressively optimized as training iterations increase. This figure illustrates how our
+                method refines the missing tooth placement step-by-step, guided by both textual and structural
+                constraints.
+              </p>
+              <figure class="has-text-centered">
+                <img src="./static/images/layout_optimization_over_iterations.png"
+                  alt="Layout optimization over training iterations" style="max-width: 100%; height: auto;">
+                <figcaption>
+                  <strong>Figure 10:</strong> Layout refinement process across training iterations guided by both
+                  textual prompts and structural priors.
+                </figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="section-card">
+            <h2 class="title is-3">Layout Initialization Results</h2>
+            <div class="content has-text-justified">
+              <p>
+                Visualization of initial tooth layouts generated by different algorithms across various datasets. Our
+                method demonstrates stronger geometric coherence and fewer overlaps.
+              </p>
+              <figure class="has-text-centered">
+                <img src="./static/images/layout_comparison.png"
+                  alt="Layout initialization results across datasets and algorithms"
+                  style="max-width: 100%; height: auto;">
+                <figcaption>
+                  <strong>Figure 11:</strong> Comparison of initial tooth layouts across datasets. Our approach
+                  achieves better geometric alignment and avoids layout overlap.
+                </figcaption>
+              </figure>
             </div>
           </div>
         </div>
