@@ -16,63 +16,78 @@
   <link rel="stylesheet" href="./static/css/index.css">
 
   <style>
-    .publication-author-wrapper {
-      margin-top: 1rem;
-      margin-bottom: 1.5rem;
-      padding: 1.2rem 1.4rem;
-      border-radius: 16px;
-      background: #fafafa;
-      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    .authors-wrapper {
+      margin: 1.5rem auto 1.8rem auto;
+      padding: 1.2rem 1rem 0.8rem 1rem;
+      border-radius: 18px;
+      background: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     }
 
-    .author-list {
+    .publication-authors.author-grid {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 0.45rem 0.9rem;
-      margin-bottom: 1rem;
-      line-height: 1.8;
+      gap: 1rem 1rem;
     }
 
-    .author-list .author-block {
+    .author-card {
       display: inline-block;
-      white-space: nowrap;
-      font-weight: 500;
+      width: 20%;
+      min-width: 220px;
+      vertical-align: top;
+      padding: 0.9rem 0.8rem;
+      border-radius: 14px;
+      background: #fafafa;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .author-list sup,
-    .publication-affiliations sup {
-      font-size: 0.72em;
-      vertical-align: super;
+    .author-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
     }
 
-    .publication-affiliations {
-      max-width: 980px;
-      margin: 0 auto;
-      font-size: 0.97rem;
-      line-height: 1.7;
-      color: #555;
+    .author-name-block {
+      display: block;
+      font-size: 1.06rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 0.35rem;
+      line-height: 1.45;
     }
 
-    .publication-affiliations .affiliation-line {
-      margin: 0.15rem 0;
-    }
-
-    .publication-affiliations a {
-      color: #3273dc;
-      text-decoration: none;
-    }
-
-    .publication-affiliations a:hover {
-      text-decoration: underline;
-    }
-
-    .corresponding-author {
-      margin-top: 0.7rem;
+    .author-school-block {
+      display: block;
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: #5b6472;
     }
 
     .publication-links {
-      margin-top: 1.2rem;
+      margin-top: 1.6rem;
+    }
+
+    .publication-links .link-block {
+      margin: 0 0.3rem 0.6rem 0.3rem;
+    }
+
+    @media screen and (max-width: 1024px) {
+      .author-card {
+        width: 28%;
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .author-card {
+        width: 44%;
+        min-width: unset;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .author-card {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -84,38 +99,58 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">
-              SVGS: Single-View to 3D Object Editing via Gaussian Splatting
-            </h1>
+            <h1 class="title is-1 publication-title">SVGS: Single-View to 3D Object Editing via Gaussian Splatting</h1>
 
-            <div class="publication-author-wrapper">
-              <div class="is-size-5 publication-authors author-list">
-                <span class="author-block">Pengcheng Xue<sup>1</sup>,</span>
-                <span class="author-block">Yan Tian<sup>1,2</sup><sup>*</sup>,</span>
-                <span class="author-block">Qiutao Song<sup>1</sup>,</span>
-                <span class="author-block">Ziyi Wang<sup>1</sup>,</span>
-                <span class="author-block">Linyang He<sup>3</sup>,</span>
-                <span class="author-block">Weiping Ding<sup>4</sup>,</span>
-                <span class="author-block">Mahmoud Hassaballah<sup>5,6</sup>,</span>
-                <span class="author-block">Karen Egiazarian<sup>7</sup>,</span>
-                <span class="author-block">Weifa Yang<sup>8</sup>,</span>
-                <span class="author-block">Leszek Rutkowski<sup>9,10</sup></span>
-              </div>
+            <div class="authors-wrapper">
+              <div class="is-size-5 publication-authors author-grid">
+                <div class="author-card">
+                  <span class="author-name-block">Pengcheng Xue<sup>1</sup></span>
+                  <span class="author-school-block">Zhejiang Gongshang University</span>
+                </div>
 
-              <div class="is-size-6 publication-affiliations">
-                <div class="affiliation-line"><sup>1</sup> Zhejiang Gongshang University, Hangzhou 310018, China</div>
-                <div class="affiliation-line"><sup>2</sup> Zhejiang Key Laboratory of Big Data and Future E-Commerce Technology, Hangzhou 310018, China</div>
-                <div class="affiliation-line"><sup>3</sup> Jianpei Technology Co., Ltd, Hangzhou 311210, China</div>
-                <div class="affiliation-line"><sup>4</sup> Nantong University, Nantong 226019, China</div>
-                <div class="affiliation-line"><sup>5</sup> Prince Sattam Bin Abdulaziz University, AlKharj 16278, Saudi Arabia</div>
-                <div class="affiliation-line"><sup>6</sup> Qena University, Qena 83523, Egypt</div>
-                <div class="affiliation-line"><sup>7</sup> Tampere University, Tampere 33720, Finland</div>
-                <div class="affiliation-line"><sup>8</sup> University of Hong Kong, Hong Kong 999077, China</div>
-                <div class="affiliation-line"><sup>9</sup> AGH University of Krakow, Krakow 30-059, Poland</div>
-                <div class="affiliation-line"><sup>10</sup> Systems Research Institute of the Polish Academy of Sciences, Warsaw 01-447, Poland</div>
-                <div class="affiliation-line corresponding-author">
-                  <sup>*</sup> Corresponding author:
-                  <a href="mailto:tianyan@zjgsu.edu.cn">tianyan@zjgsu.edu.cn</a>
+                <div class="author-card">
+                  <span class="author-name-block">Yan Tian<sup>1,2</sup><sup>*</sup></span>
+                  <span class="author-school-block">Zhejiang Gongshang University<br>Zhejiang Key Laboratory of Big Data and Future E-Commerce Technology</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Qiutao Song<sup>1</sup></span>
+                  <span class="author-school-block">Zhejiang Gongshang University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Ziyi Wang<sup>1</sup></span>
+                  <span class="author-school-block">Zhejiang Gongshang University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Linyang He<sup>3</sup></span>
+                  <span class="author-school-block">Jianpei Technology Co., Ltd</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Weiping Ding<sup>4</sup></span>
+                  <span class="author-school-block">Nantong University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Mahmoud Hassaballah<sup>5,6</sup></span>
+                  <span class="author-school-block">Prince Sattam Bin Abdulaziz University<br>Qena University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Karen Egiazarian<sup>7</sup></span>
+                  <span class="author-school-block">Tampere University</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Weifa Yang<sup>8</sup></span>
+                  <span class="author-school-block">University of Hong Kong</span>
+                </div>
+
+                <div class="author-card">
+                  <span class="author-name-block">Leszek Rutkowski<sup>9,10</sup></span>
+                  <span class="author-school-block">AGH University of Krakow<br>Systems Research Institute of the Polish Academy of Sciences</span>
                 </div>
               </div>
             </div>
