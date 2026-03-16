@@ -1,21 +1,147 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="description"
-    content="Advanced Dental Digitization: Incorporating Shape Priors and
-    Multiview Coherence in Diffusion Models for Tooth Model Design">
+    content="Advanced Dental Digitization: Incorporating Shape Priors and Multiview Coherence in Diffusion Models for Tooth Model Design">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>SVGS: Single-View to 3D Object Editing via Gaussian Splatting</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
-
   <link rel="stylesheet" href="./static/css/bulma.min.css">
   <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
   <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
   <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
   <link rel="stylesheet" href="./static/css/index.css">
+
+  <style>
+    body {
+      font-family: "Google Sans", "Noto Sans", sans-serif;
+    }
+
+    .hero {
+      background: linear-gradient(180deg, #ffffff 0%, #fafbfc 100%);
+    }
+
+    .publication-title {
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      font-family: "Google Sans", sans-serif;
+    }
+
+    .publication-author-wrapper {
+      margin: 1.2rem auto 1.8rem auto;
+      max-width: 1100px;
+      padding: 1.35rem 1.5rem;
+      border-radius: 18px;
+      background: #fafafa;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .author-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.45rem 0.95rem;
+      margin-bottom: 1rem;
+      line-height: 1.9;
+    }
+
+    .author-list .author-block {
+      display: inline-block;
+      white-space: nowrap;
+      font-size: 1.08rem;
+      font-weight: 500;
+      color: #222;
+    }
+
+    .author-list sup,
+    .publication-affiliations sup {
+      font-size: 0.72em;
+      vertical-align: super;
+      font-weight: 600;
+    }
+
+    .publication-affiliations {
+      max-width: 980px;
+      margin: 0 auto;
+      font-size: 0.98rem;
+      line-height: 1.75;
+      color: #555;
+    }
+
+    .affiliation-line {
+      margin: 0.12rem 0;
+    }
+
+    .corresponding-author,
+    .author-emails {
+      margin-top: 0.7rem;
+      font-size: 0.95rem;
+      color: #444;
+    }
+
+    .publication-affiliations a {
+      color: #3273dc;
+      text-decoration: none;
+    }
+
+    .publication-affiliations a:hover {
+      text-decoration: underline;
+    }
+
+    .publication-links {
+      margin-top: 1.4rem;
+    }
+
+    .publication-links .link-block {
+      margin: 0 0.25rem 0.5rem 0.25rem;
+    }
+
+    .section-card {
+      background: #fff;
+      border-radius: 18px;
+      padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
+    }
+
+    .content img {
+      width: 100%;
+      height: auto;
+      border-radius: 14px;
+      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.08);
+      margin-top: 0.5rem;
+    }
+
+    .title.is-3 {
+      margin-bottom: 1rem;
+    }
+
+    .content p {
+      font-size: 1.02rem;
+      line-height: 1.8;
+      color: #333;
+    }
+
+    @media screen and (max-width: 768px) {
+      .publication-title {
+        font-size: 2rem !important;
+      }
+
+      .publication-author-wrapper {
+        padding: 1rem;
+      }
+
+      .author-list .author-block {
+        font-size: 1rem;
+      }
+
+      .publication-affiliations {
+        font-size: 0.92rem;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -25,35 +151,55 @@
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">SVGS: Single-View to 3D Object Editing via Gaussian Splatting</h1>
+            <h1 class="title is-1 publication-title">
+              SVGS: Single-View to 3D Object Editing via Gaussian Splatting
+            </h1>
 
-            <div class="is-size-5 publication-authors">
-              <span class="author-block">Pengcheng Xue<sup>1</sup>,</span>
-              <span class="author-block">Yan Tian<sup>1,2</sup><sup>*</sup>,</span>
-              <span class="author-block">Qiutao Song<sup>1</sup>,</span>
-              <span class="author-block">Ziyi Wang<sup>1</sup>,</span>
-              <span class="author-block">Linyang He<sup>3</sup>,</span>
-              <span class="author-block">Weiping Ding<sup>4</sup>,</span>
-              <span class="author-block">Mahmoud Hassaballah<sup>5,6</sup>,</span>
-              <span class="author-block">Karen Egiazarian<sup>7</sup>,</span>
-              <span class="author-block">Weifa Yang<sup>8</sup>,</span>
-              <span class="author-block">Leszek Rutkowski<sup>9,10</sup></span>
-            </div>
+            <div class="publication-author-wrapper">
+              <div class="is-size-5 publication-authors author-list">
+                <span class="author-block">Pengcheng Xue<sup>1</sup></span>
+                <span class="author-block">Yan Tian<sup>1,2</sup><sup>†</sup></span>
+                <span class="author-block">Qiutao Song<sup>1</sup></span>
+                <span class="author-block">Ziyi Wang<sup>1</sup></span>
+                <span class="author-block">Linyang He<sup>3</sup></span>
+                <span class="author-block">Weiping Ding<sup>4</sup></span>
+                <span class="author-block">Mahmoud Hassaballah<sup>5,6</sup></span>
+                <span class="author-block">Karen Egiazarian<sup>7</sup></span>
+                <span class="author-block">Weifa Yang<sup>8</sup></span>
+                <span class="author-block">Leszek Rutkowski<sup>9,10</sup></span>
+              </div>
 
-            <div class="is-size-6 publication-authors">
-              <span class="author-block"><sup>1</sup>Zhejiang Gongshang University, Hangzhou 310018, China</span><br>
-              <span class="author-block"><sup>2</sup>Zhejiang Key Laboratory of Big Data and Future E-Commerce Technology, Hangzhou 310018, China</span><br>
-              <span class="author-block"><sup>3</sup>Jianpei Technology Co., Ltd, Hangzhou 311210, China</span><br>
-              <span class="author-block"><sup>4</sup>Nantong University, Nantong 226019, China</span><br>
-              <span class="author-block"><sup>5</sup>Prince Sattam Bin Abdulaziz University, AlKharj 16278, Saudi Arabia</span><br>
-              <span class="author-block"><sup>6</sup>Qena University, Qena 83523, Egypt</span><br>
-              <span class="author-block"><sup>7</sup>Tampere University, Tampere 33720, Finland</span><br>
-              <span class="author-block"><sup>8</sup>University of Hong Kong, Hong Kong 999077, China</span><br>
-              <span class="author-block"><sup>9</sup>AGH University of Krakow, Krakow 30-059, Poland</span><br>
-              <span class="author-block"><sup>10</sup>Systems Research Institute of the Polish Academy of Sciences, Warsaw 01-447, Poland</span><br>
-              <span class="author-block"><sup>*</sup>Corresponding author:
-                <a href="mailto:tianyan@zjgsu.edu.cn">tianyan@zjgsu.edu.cn</a>
-              </span>
+              <div class="publication-affiliations">
+                <div class="affiliation-line"><sup>1</sup> Zhejiang Gongshang University, Hangzhou 310018, China</div>
+                <div class="affiliation-line"><sup>2</sup> Zhejiang Key Laboratory of Big Data and Future E-Commerce
+                  Technology, Hangzhou 310018, China</div>
+                <div class="affiliation-line"><sup>3</sup> Jianpei Technology Co., Ltd, Hangzhou 311210, China</div>
+                <div class="affiliation-line"><sup>4</sup> Nantong University, Nantong 226019, China</div>
+                <div class="affiliation-line"><sup>5</sup> Prince Sattam Bin Abdulaziz University, AlKharj 16278,
+                  Saudi Arabia</div>
+                <div class="affiliation-line"><sup>6</sup> Qena University, Qena 83523, Egypt</div>
+                <div class="affiliation-line"><sup>7</sup> Tampere University, Tampere 33720, Finland</div>
+                <div class="affiliation-line"><sup>8</sup> University of Hong Kong, Hong Kong 999077, China</div>
+                <div class="affiliation-line"><sup>9</sup> AGH University of Krakow, Krakow 30-059, Poland</div>
+                <div class="affiliation-line"><sup>10</sup> Systems Research Institute of the Polish Academy of
+                  Sciences, Warsaw 01-447, Poland</div>
+
+                <div class="corresponding-author">
+                  <sup>†</sup> Corresponding author:
+                  <a href="mailto:tianyan@zjgsu.edu.cn">tianyan@zjgsu.edu.cn</a>
+                </div>
+
+                <div class="author-emails">
+                  Pengcheng Xue:
+                  <a href="mailto:1152231696@qq.com">1152231696@qq.com</a>
+                  &nbsp;|&nbsp;
+                  Linyang He:
+                  <a href="mailto:he.linyang@jianpeicn.com">he.linyang@jianpeicn.com</a>
+                  &nbsp;|&nbsp;
+                  Weiping Ding:
+                  <a href="mailto:dwp9988@163.com">dwp9988@163.com</a>
+                </div>
+              </div>
             </div>
 
             <div class="column has-text-centered">
@@ -88,11 +234,26 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              Text-driven 3D editing has gained significant attention due to its convenience and user-friendliness. However, traditional 3D editing methods that rely on mesh and point cloud representations often struggle to accurately describe complex objects. In contrast, methods based on implicit 3D representations, such as Neural Radiance Fields (NeRF), can effectively render complex objects but suffer from slow processing speeds and limited control over specific object areas. Additionally, existing methods often face challenges in maintaining consistency and efficiency in multi-view editing. To address these limitations, we propose SVGS, a method that utilizes text instructions to edit objects through 3D Gaussian Splatting (GS). Specifically, given a singleview image and text input, we first employ a 2D editing strategy based on the cross-domain diffusion model to perform editing operations on the input image and generate multi-view consistent edited images. Subsequently, we introduce a GS reconstruction framework based on the edited sparse images to achieve 3D object editing. We compared SVGS with existing baseline methods across various scene settings, and the results demonstrate that SVGS excels in both editing capability and processing speed, marking a significant advancement in 3D editing technology.
-            </p>
+          <div class="section-card">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Text-driven 3D editing has gained significant attention due to its convenience and user-friendliness.
+                However, traditional 3D editing methods that rely on mesh and point cloud representations often
+                struggle to accurately describe complex objects. In contrast, methods based on implicit 3D
+                representations, such as Neural Radiance Fields (NeRF), can effectively render complex objects but
+                suffer from slow processing speeds and limited control over specific object areas. Additionally,
+                existing methods often face challenges in maintaining consistency and efficiency in multi-view editing.
+                To address these limitations, we propose SVGS, a method that utilizes text instructions to edit objects
+                through 3D Gaussian Splatting (GS). Specifically, given a single-view image and text input, we first
+                employ a 2D editing strategy based on the cross-domain diffusion model to perform editing operations on
+                the input image and generate multi-view consistent edited images. Subsequently, we introduce a GS
+                reconstruction framework based on the edited sparse images to achieve 3D object editing. We compared
+                SVGS with existing baseline methods across various scene settings, and the results demonstrate that
+                SVGS excels in both editing capability and processing speed, marking a significant advancement in 3D
+                editing technology.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -103,9 +264,11 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">Method</h2>
-          <div class="content has-text-justified">
-            <img src="./static/images/framework.png" alt="Description of the image">
+          <div class="section-card">
+            <h2 class="title is-3">Method</h2>
+            <div class="content has-text-justified">
+              <img src="./static/images/framework.png" alt="SVGS framework">
+            </div>
           </div>
         </div>
       </div>
@@ -116,9 +279,11 @@
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          <h2 class="title is-3">Example</h2>
-          <div class="content has-text-justified">
-            <img src="./static/images/example.png" alt="Description of the image">
+          <div class="section-card">
+            <h2 class="title is-3">Example</h2>
+            <div class="content has-text-justified">
+              <img src="./static/images/example.png" alt="SVGS examples">
+            </div>
           </div>
         </div>
       </div>
@@ -126,4 +291,5 @@
   </section>
 
 </body>
+
 </html>
